@@ -30,7 +30,7 @@ const deleteCardById = (req, res) => {
   Card.findOneAndRemove({_id: cardId})
     .then((card) => res.status(200).send(card))
     .catch((error) => {
-      if (error.name === "CastError") return notFoundErrorAnswer(res, "Карточка с указанным _id не найдена");
+      if (error.name === "CastError") return validationErrorAnswer(res, "Карточка с указанным _id не найдена");
 
       defaultErrorAnswer(res);
     });
@@ -52,7 +52,7 @@ const addLikeCard = (req, res) => {
       res.status(200).send(card)
     })
     .catch((error) => {
-      if (error.name === "CastError") return notFoundErrorAnswer(res, "Передан несуществующий _id карточки");
+      if (error.name === "CastError") return validationErrorAnswer(res, "Передан несуществующий _id карточки");
       if (error.name === "ValidationError") return validationErrorAnswer(res, "Переданы некорректные данные для постановки/снятии лайка");
 
       defaultErrorAnswer(res);
@@ -72,7 +72,11 @@ const deleteLikeCard = (req, res) => {
     }
   )
     .then((card) => res.status(200).send(card))
-    .catch(() => defaultErrorAnswer(res));
+    .catch((error) => {
+      if (error.name === "CastError") return validationErrorAnswer(res, "Передан несуществующий _id карточки");
+
+      defaultErrorAnswer(res)
+    });
 }
 
 module.exports = {

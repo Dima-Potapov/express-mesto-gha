@@ -33,7 +33,11 @@ const getUserById = (req, res) => {
 
       res.status(200).send(user)
     })
-    .catch(() => defaultErrorAnswer(res));
+    .catch((error) => {
+      if (error.name === "CastError") return notFoundErrorAnswer(res, "Пользователь по указанному _id не найден");
+
+      defaultErrorAnswer(res)
+    });
 }
 
 const updateUser = (req, res) => {

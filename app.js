@@ -26,15 +26,6 @@ app.use((req, res, next) => {
 
 app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
+app.use('/', (req, res) => notFoundErrorAnswer(res, 'Страница не найдена'));
 
-app.use((err, req, res, next) => {
-  if (err.name instanceof 'NotFound') {
-    notFoundErrorAnswer(res, 'Страница не найдена');
-  } else {
-    next(err);
-  }
-});
-
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`App listening on port ${PORT}`));

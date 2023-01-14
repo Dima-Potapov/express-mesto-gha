@@ -2,13 +2,22 @@ const Card = require('../models/card');
 const {
   validationErrorAnswer,
   defaultErrorAnswer,
+  notFoundErrorAnswer,
 } = require('../utils/errors');
 
 const createCard = (req, res) => {
-  const { name, link } = req.body;
+  const {
+    name,
+    link,
+  } = req.body;
 
-  Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.status(201).send(card))
+  Card.create({
+    name,
+    link,
+    owner: req.user._id,
+  })
+    .then((card) => res.status(201)
+      .send(card))
     .catch((error) => {
       if (error.name === 'ValidationError') return validationErrorAnswer(res, 'Переданы некорректные данные при создании карточки');
 
@@ -17,7 +26,8 @@ const createCard = (req, res) => {
 };
 const getCards = (req, res) => {
   Card.find({})
-    .then((cards) => res.status(200).send(cards))
+    .then((cards) => res.status(200)
+      .send(cards))
     .catch(() => defaultErrorAnswer(res));
 };
 
@@ -25,7 +35,12 @@ const deleteCardById = (req, res) => {
   const { cardId } = req.params;
 
   Card.findOneAndRemove({ _id: cardId })
-    .then((card) => res.status(200).send(card))
+    .then((card) => {
+      if (!card) return notFoundErrorAnswer(res, 'Карточка с указанным _id не найдена');
+
+      return res.status(200)
+        .send(card);
+    })
     .catch((error) => {
       if (error.name === 'CastError') return validationErrorAnswer(res, 'Карточка с указанным _id не найдена');
 
@@ -46,7 +61,10 @@ const addLikeCard = (req, res) => {
     },
   )
     .then((card) => {
-      res.status(200).send(card);
+      if (!card) return notFoundErrorAnswer(res, 'Передан несуществующий _id');
+
+      return res.status(200)
+        .send(card);
     })
     .catch((error) => {
       if (error.name === 'CastError') return validationErrorAnswer(res, 'Передан несуществующий _id карточки');
@@ -68,7 +86,11 @@ const deleteLikeCard = (req, res) => {
       upsert: false,
     },
   )
-    .then((card) => res.status(200).send(card))
+    .then((card) => {
+      if (!card) return notFoundErrorAnswer(res, 'Передан несуществующий _id');
+
+      return res.status(200).send(card);
+    })
     .catch((error) => {
       if (error.name === 'CastError') return validationErrorAnswer(res, 'Передан несуществующий _id карточки');
 

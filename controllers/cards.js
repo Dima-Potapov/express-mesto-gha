@@ -58,9 +58,9 @@ const addLikeCard = (req, res, next) => {
     },
   )
     .then((card) => {
-      if (!card) throw new CastError('Передан несуществующий _id', 404);
+      if (!card) return next(new CastError('Передан несуществующий _id', 404));
 
-      res.status(200)
+      return res.status(200)
         .send(card);
     })
     .catch((error) => {

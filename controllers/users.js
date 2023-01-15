@@ -51,10 +51,10 @@ const createUser = (req, res, next) => {
         email: user.email,
       }))
     .catch((error) => {
-      if (error.name === 'ValidationError') throw new CastError('Переданы некорректные данные при создании пользователя', 400);
+      if (error.name === 'ValidationError') return next(new CastError('Переданы некорректные данные при создании пользователя', 400));
       if (error.code === 11000) return next(new CastError('Пользователь с таким email уже зарегистрирован', 409));
 
-      throw new CastError();
+      return next(new CastError());
     });
 };
 const getUsers = (req, res, next) => {

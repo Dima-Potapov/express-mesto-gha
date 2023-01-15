@@ -3,7 +3,7 @@ const CastError = require('../utils/errors');
 require('dotenv')
   .config();
 
-const { JWT_SECRET, NODE_ENV } = process.env;
+const { JWT_SECRET, NODE_ENV = 'dev' } = process.env;
 
 module.exports = (req, res, next) => {
   const jwtKey = req.cookies.jwt;

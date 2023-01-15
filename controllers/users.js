@@ -7,7 +7,7 @@ const CastError = require('../utils/errors');
 require('dotenv')
   .config();
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET = 'dev-secret' } = process.env;
 
 const getAuthUser = (req, res) => {
   const { _id: userId } = req.user;

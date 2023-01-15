@@ -1,19 +1,6 @@
 {
   "extends": "airbnb-base",
   "rules": {
-    "func-names": [
-      "error",
-      "never"
-    ],
-    "no-unused-vars": [
-      "error",
-      {
-        "args": "none"
-      }
-    ],
-    "no-param-reassign": "off",
-    "no-return-assign": "off",
-    "consistent-return": "off",
     "no-underscore-dangle": ["error", { "allow": ["_id"] }]
   }
 }

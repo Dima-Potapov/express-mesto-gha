@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
+const { linkRegex } = require('../utils/regexTemplates');
 
 const userSchema = new Schema({
   name: {
@@ -21,7 +22,7 @@ const userSchema = new Schema({
     required: false,
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
     validate: {
-      validator: (v) => /^(https?:\/\/)(www\.)?([\da-z-.]+)\.([a-z.]{2,6})[\da-zA-Z-._~:?#[\]@!$&'()*+,;=/]*\/?#?$/.test(v),
+      validator: (v) => linkRegex.test(v),
       message: 'Неправильный формат Url',
     },
   },

@@ -1,9 +1,43 @@
-const validationErrorAnswer = (res, message = null) => res.status(400).send({ message: message || 'Переданы некорректные данные' });
-const notFoundErrorAnswer = (res, message = null) => res.status(404).send({ message: message || 'Данные не найдены' });
-const defaultErrorAnswer = (res, message = null) => res.status(500).send({ message: message || 'Произошла ошибка' });
+const validationError = (message = 'Переданы некорректные данные') => {
+  const err = new Error(message);
+
+  err.statusCode = 400;
+
+  return err;
+};
+const notFoundError = (message = 'Данные не найдены') => {
+  const err = new Error(message);
+
+  err.statusCode = 404;
+
+  return err;
+};
+const defaultError = (message = 'Произошла ошибка') => {
+  const err = new Error(message);
+
+  err.statusCode = 500;
+
+  return err;
+};
+const authError = (message = 'Необходима авторизация') => {
+  const err = new Error(message);
+
+  err.statusCode = 401;
+
+  return err;
+};
+const customError = (message = 'Произошла ошибка', code = 500) => {
+  const err = new Error(message);
+
+  err.statusCode = code;
+
+  return err;
+};
 
 module.exports = {
-  validationErrorAnswer,
-  notFoundErrorAnswer,
-  defaultErrorAnswer,
+  validationError,
+  notFoundError,
+  defaultError,
+  authError,
+  customError,
 };

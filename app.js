@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 app.use(router);
 
-app.use(errorHandler);
 app.use(errors());
+app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`));

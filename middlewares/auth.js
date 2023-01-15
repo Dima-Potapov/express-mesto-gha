@@ -3,7 +3,7 @@ const CastError = require('../utils/errors');
 require('dotenv')
   .config();
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET, NODE_ENV } = process.env;
 
 module.exports = (req, res, next) => {
   const jwtKey = req.cookies.jwt;
@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(jwtKey, JWT_SECRET);
+    payload = jwt.verify(jwtKey, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
   } catch (err) {
     throw new CastError('Авторизация не пройдена', 401);
   }

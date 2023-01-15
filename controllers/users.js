@@ -10,7 +10,8 @@ const {
   customError,
 } = require('../utils/errors');
 
-require('dotenv').config();
+require('dotenv')
+  .config();
 
 const { JWT_SECRET } = process.env;
 
@@ -37,15 +38,24 @@ const createUser = (req, res, next) => {
   } = req.body;
 
   bcrypt.hash(password, 10)
-    .then((hash) => User.create({
-      name,
-      about,
-      avatar,
-      email,
-      password: hash,
-    }))
+    .then((hash) => User.create(
+      {
+        name,
+        about,
+        avatar,
+        email,
+        password: hash,
+      },
+    ))
+
     .then((user) => res.status(201)
-      .send(user))
+      .send({
+        _id: user._id,
+        name: user.name,
+        about: user.about,
+        avatar: user.avatar,
+        email: user.email,
+      }))
     .catch((error) => {
       if (error.name === 'ValidationError') return next(validationError('Переданы некорректные данные при создании пользователя'));
       if (error.code === 11000) return next(customError('Пользователь с таким email уже зарегистрирован', 409));
@@ -147,11 +157,10 @@ const login = (req, res, next) => {
           maxAge: 604800,
           httpOnly: true,
           sameSite: true,
-        });
-
-      delete user.password;
-
-      res.status(200).send(user);
+        })
+        .status(200)
+        .send({ massege: 'Авторизация прошла успешно!' })
+        .end();
     })
     .catch((err) => {
       if (err.name === 'CastError') return next(authError('Неправильные почта или пароль'));

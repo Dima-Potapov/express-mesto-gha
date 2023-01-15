@@ -3,6 +3,7 @@ const {
   validationError,
   defaultError,
   notFoundError,
+  customError,
 } = require('../utils/errors');
 
 const createCard = (req, res, next) => {
@@ -38,7 +39,13 @@ const deleteCardById = (req, res, next) => {
   Card.findById(cardId)
     .populate('owner')
     .then((card) => {
-      if (!card || card.owner._id.valueOf() !== userId) return next(validationError('Карточка с указанным _id не найдена'));
+      if (!card) {
+        return next(notFoundError('Карточка с указанным _id не найдена'));
+      }
+
+      if (card.owner._id.valueOf() !== userId) {
+        return next(customError('Карточка с указанным _id не найдена', 403));
+      }
 
       Card.findByIdAndDelete(card._id)
         .then((removedCard) => res.status(200)

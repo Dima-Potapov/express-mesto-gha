@@ -44,13 +44,9 @@ app.post('/signup', celebrate({
   }),
 }), createUser);
 
-app.use(auth);
-
-app.use('/users', userRoutes);
-app.use('/cards', cardRoutes);
-
-app.use('/', (req, res) => notFoundError(res, 'Страница не найдена'));
-
+app.use('/users', auth, userRoutes);
+app.use('/cards', auth, cardRoutes);
+app.use('/', (req, res, next) => next(notFoundError('Страница не найдена')));
 app.use(errors());
 app.use((err, req, res, next) => {
   const {

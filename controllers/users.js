@@ -148,7 +148,7 @@ const login = (req, res, next) => {
   User.findOne({ email })
     .select('+password')
     .then((user) => {
-      if (!bcrypt.compare(password, user.password)) return next(authError('Неправильные почта или пароль'));
+      if (!user || !bcrypt.compare(password, user.password)) return next(authError('Неправильные почта или пароль'));
 
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
 

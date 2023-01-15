@@ -22,7 +22,7 @@ const getAuthUser = (req, res) => {
     });
 };
 
-const createUser = (req, res) => {
+const createUser = (req, res, next) => {
   const {
     name,
     about,
@@ -52,7 +52,7 @@ const createUser = (req, res) => {
       }))
     .catch((error) => {
       if (error.name === 'ValidationError') throw new CastError('Переданы некорректные данные при создании пользователя', 400);
-      if (error.code === 11000) throw new CastError('Пользователь с таким email уже зарегистрирован', 409);
+      if (error.code === 11000) return next(new CastError('Пользователь с таким email уже зарегистрирован', 409));
 
       throw new CastError();
     });

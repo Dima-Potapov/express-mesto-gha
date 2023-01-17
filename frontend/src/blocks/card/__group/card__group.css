@@ -1,0 +1,7 @@
+.card__group {
+    display: flex;
+    min-height: 79px;
+    padding: 0 15px 0 21px;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -1,0 +1,18 @@
+.profile__photo-image {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin-right: 30px;
+}
+
+@media screen and (max-width: 1040px) {
+    .profile__photo-image {
+      margin-right: 10px;
+    }
+}
+
+@media screen and (max-width: 929px) {
+    .profile__photo-image {
+     margin: 0;
+    }
+}

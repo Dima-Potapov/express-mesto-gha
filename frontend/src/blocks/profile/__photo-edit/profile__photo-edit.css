@@ -1,0 +1,19 @@
+.profile__photo-edit {
+    background-color: #000;
+    background-image: url(../../../images/svg/edit.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 26px 26px;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transition: .2s ease-in-out;
+    width: 120px;
+    height: 120px;
+}
+
+.profile__photo-edit:hover {
+    cursor: pointer;
+    opacity: .8;
+}

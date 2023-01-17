@@ -1,0 +1,6 @@
+.registration__content {
+    flex: 1 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+};

@@ -1,0 +1,9 @@
+.popup__forms_question {
+    padding-top: 20px;
+}
+
+@media screen and (max-width: 929px) {
+    .popup__forms_question {
+        padding:0 22px 25px;
+    }
+}

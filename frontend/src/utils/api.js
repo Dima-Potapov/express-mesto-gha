@@ -134,5 +134,5 @@ class Api {
 }
 
 export const api = new Api({
-    baseUrl: 'https://dimap.domainname.student.nomoredomains.rocks/api',
+    baseUrl: 'https://api.dimapotapov.student.nomoredomains.rocks',
 });

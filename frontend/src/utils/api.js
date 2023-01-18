@@ -1,5 +1,3 @@
-import {BASE_URL} from "./auth";
-
 class Api {
     constructor(options) {
         this.baseUrl = options.baseUrl;
@@ -14,7 +12,7 @@ class Api {
     }
 
     register(email, password) {
-        return fetch(`${BASE_URL}/signup`, {
+        return fetch(`${this.baseUrl}/signup`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -27,7 +25,7 @@ class Api {
     }
 
     authorize(email, password) {
-        return fetch(`${BASE_URL}/signin`, {
+        return fetch(`${this.baseUrl}/signin`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -119,7 +117,7 @@ class Api {
     }
 
     signOut() {
-        return fetch(`${BASE_URL}/signout`, {
+        return fetch(`${this.baseUrl}/signout`, {
             method: 'DELETE',
             credentials: 'include',
         })
@@ -127,7 +125,7 @@ class Api {
     }
 
     checkAuth = () => {
-        return fetch(`${BASE_URL}/check-auth`, {
+        return fetch(`${this.baseUrl}/check-auth`, {
             method: 'GET',
             credentials: 'include',
         })
@@ -136,5 +134,5 @@ class Api {
 }
 
 export const api = new Api({
-    baseUrl: 'http://localhost:3001',
+    baseUrl: 'https://dimap.domainname.student.nomoredomains.rocks/api',
 });
